@@ -1,0 +1,13 @@
+import requests
+from bs4 import BeautifulSoup
+
+rss_url = "https://stackoverflow.com/feeds/tag/python"
+response = requests.get(rss_url)
+soup = BeautifulSoup(response.text, 'xml')
+
+print("📌 Python Questions on Stack Overflow:\n")
+
+entries = soup.find_all("entry")
+for i, entry in enumerate(entries[:10], 1):  # limit to first 10
+    title = entry.title.text.strip()
+    print(f"{i}. {title}")
